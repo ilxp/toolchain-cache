@@ -86,7 +86,7 @@ jobs:
         name: ${{ matrix.tag.version }}
         allowUpdates: true
         tag: ${{ matrix.tag.version }}
-        commit: master
+        commit: main
         replacesArtifacts: true
         token: ${{ secrets.workflow_token }}
         artifacts: ${{ env.WORKDIR }}/openwrt/toolchain-cache/*.tar.gz
