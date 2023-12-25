@@ -78,7 +78,7 @@ jobs:
     - name: Compile Toolchain
       run: |
         [ "${{ matrix.libc }}" = "glibc" ] && export USE_GLIBC=y
-        BUILD_TOOLCHAIN=y ENABLE_BPF=y bash <(curl -sS ${{ secrets.script_url_general }}) ${{ matrix.tag.type }} ${{ matrix.model }}
+        BUILD_TOOLCHAIN=y ENABLE_BPF=y bash <(curl -sS ${{ secrets.script_url_2305 }}) ${{ matrix.tag.type }} ${{ matrix.model }}
 
     - name: Create release
       uses: ncipollo/release-action@v1.11.1
