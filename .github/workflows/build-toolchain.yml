@@ -10,7 +10,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: /home/runner
     strategy:
       fail-fast: false
       matrix:
@@ -41,11 +40,13 @@ jobs:
 
     - name: Set release env
       run: |
-        echo WORKDIR="/home/runner" >> "$GITHUB_ENV"
+        sudo mkdir -p /builder
+        sudo chown -R runner.runner /builder
+        echo WORKDIR="/builder" >> "$GITHUB_ENV"
         if [[ ${{ matrix.model }} == "null" ]]; then
           echo "release=false" >> "$GITHUB_ENV"
         fi
-
+        
     - name: Free disk space
       run: |
         sudo rm -rf /etc/apt/sources.list.d
@@ -76,12 +77,13 @@ jobs:
         df -Th
 
     - name: Compile Toolchain
+      working-directory: /builder
       run: |
         [ "${{ matrix.libc }}" = "glibc" ] && export USE_GLIBC=y
         BUILD_TOOLCHAIN=y ENABLE_BPF=y bash <(curl -sS ${{ secrets.script_url_2305 }}) ${{ matrix.tag.type }} ${{ matrix.model }}
 
     - name: Create release
-      uses: ncipollo/release-action@v1.11.1
+      uses: ncipollo/release-action@v1.13.0
       with:
         name: ${{ matrix.tag.version }}
         allowUpdates: true
