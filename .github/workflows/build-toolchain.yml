@@ -1,4 +1,4 @@
-name: Build toolchain
+name: Build toolchain GCC11
 
 on: workflow_dispatch
 
