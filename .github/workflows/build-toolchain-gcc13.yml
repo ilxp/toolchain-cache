@@ -14,8 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         model:
-          #- nanopi-r4s
-          #- nanopi-r5s
+          - nanopi-r4s
+          - nanopi-r5s
           - x86_64
         tag:
           - type: rc2
@@ -84,7 +84,7 @@ jobs:
          BUILD_TOOLCHAIN=y ENABLE_LTO=y ENABLE_BPF=y USE_GCC13=y USE_MOLD=y bash <(curl -sS ${{ secrets.script_url_2305 }}) ${{ matrix.tag.type }} ${{ matrix.model }}
         
     - name: Create release
-      uses: ncipollo/release-action@v1.13.0
+      uses: ncipollo/release-action@v1.11.1
       with:
         name: ${{ matrix.tag.version }}
         allowUpdates: true
